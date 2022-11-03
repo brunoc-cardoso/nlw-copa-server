@@ -1,3 +1,4 @@
+import { prisma } from '@/services/prisma';
 import Fastify from 'fastify';
 
 async function bootstrap() {
@@ -5,9 +6,11 @@ async function bootstrap() {
     logger: true,
   });
 
-  fastify.get('/pools/count', () => {
+  fastify.get('/pools/count', async () => {
+    const count = await prisma.pool.count();
+
     return {
-      count: 0,
+      count,
     };
   });
 
